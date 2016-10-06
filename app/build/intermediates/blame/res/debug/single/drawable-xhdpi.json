@@ -1,0 +1,34 @@
+[
+    {
+        "merged": "C:\\Workspace\\Android\\TaskList\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\ic_action_delete.png",
+        "source": "C:\\Workspace\\Android\\TaskList\\app\\src\\main\\res\\drawable-xhdpi\\ic_action_delete.png"
+    },
+    {
+        "merged": "C:\\Workspace\\Android\\TaskList\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\ic_action_cancel.png",
+        "source": "C:\\Workspace\\Android\\TaskList\\app\\src\\main\\res\\drawable-xhdpi\\ic_action_cancel.png"
+    },
+    {
+        "merged": "C:\\Workspace\\Android\\TaskList\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\btn_check_on_holo_light.png",
+        "source": "C:\\Workspace\\Android\\TaskList\\app\\src\\main\\res\\drawable-xhdpi\\btn_check_on_holo_light.png"
+    },
+    {
+        "merged": "C:\\Workspace\\Android\\TaskList\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\ic_action_search.png",
+        "source": "C:\\Workspace\\Android\\TaskList\\app\\src\\main\\res\\drawable-xhdpi\\ic_action_search.png"
+    },
+    {
+        "merged": "C:\\Workspace\\Android\\TaskList\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\btn_check_off_holo_light.png",
+        "source": "C:\\Workspace\\Android\\TaskList\\app\\src\\main\\res\\drawable-xhdpi\\btn_check_off_holo_light.png"
+    },
+    {
+        "merged": "C:\\Workspace\\Android\\TaskList\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\ic_action_save.png",
+        "source": "C:\\Workspace\\Android\\TaskList\\app\\src\\main\\res\\drawable-xhdpi\\ic_action_save.png"
+    },
+    {
+        "merged": "C:\\Workspace\\Android\\TaskList\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\ic_action_add.png",
+        "source": "C:\\Workspace\\Android\\TaskList\\app\\src\\main\\res\\drawable-xhdpi\\ic_action_add.png"
+    },
+    {
+        "merged": "C:\\Workspace\\Android\\TaskList\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\ic_launcher.png",
+        "source": "C:\\Workspace\\Android\\TaskList\\app\\src\\main\\res\\drawable-xhdpi\\ic_launcher.png"
+    }
+]

@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "C:\\Workspace\\Android\\TaskList\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi\\ic_action_add.png",
+        "source": "C:\\Workspace\\Android\\TaskList\\app\\src\\main\\res\\drawable-ldpi\\ic_action_add.png"
+    },
+    {
+        "merged": "C:\\Workspace\\Android\\TaskList\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi\\ic_action_cancel.png",
+        "source": "C:\\Workspace\\Android\\TaskList\\app\\src\\main\\res\\drawable-ldpi\\ic_action_cancel.png"
+    },
+    {
+        "merged": "C:\\Workspace\\Android\\TaskList\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi\\ic_launcher.png",
+        "source": "C:\\Workspace\\Android\\TaskList\\app\\src\\main\\res\\drawable-ldpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Workspace\\Android\\TaskList\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi\\ic_action_delete.png",
+        "source": "C:\\Workspace\\Android\\TaskList\\app\\src\\main\\res\\drawable-ldpi\\ic_action_delete.png"
+    },
+    {
+        "merged": "C:\\Workspace\\Android\\TaskList\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi\\ic_action_save.png",
+        "source": "C:\\Workspace\\Android\\TaskList\\app\\src\\main\\res\\drawable-ldpi\\ic_action_save.png"
+    }
+]

@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "C:\\Workspace\\Android\\TaskList\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_task_list.xml",
+        "source": "C:\\Workspace\\Android\\TaskList\\app\\src\\main\\res\\layout\\activity_task_list.xml"
+    },
+    {
+        "merged": "C:\\Workspace\\Android\\TaskList\\app\\build\\intermediates\\res\\merged\\debug\\layout\\spinner_list.xml",
+        "source": "C:\\Workspace\\Android\\TaskList\\app\\src\\main\\res\\layout\\spinner_list.xml"
+    },
+    {
+        "merged": "C:\\Workspace\\Android\\TaskList\\app\\build\\intermediates\\res\\merged\\debug\\layout\\app_widget_top3.xml",
+        "source": "C:\\Workspace\\Android\\TaskList\\app\\src\\main\\res\\layout\\app_widget_top3.xml"
+    },
+    {
+        "merged": "C:\\Workspace\\Android\\TaskList\\app\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_task_list.xml",
+        "source": "C:\\Workspace\\Android\\TaskList\\app\\src\\main\\res\\layout\\fragment_task_list.xml"
+    },
+    {
+        "merged": "C:\\Workspace\\Android\\TaskList\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_add_edit.xml",
+        "source": "C:\\Workspace\\Android\\TaskList\\app\\src\\main\\res\\layout\\activity_add_edit.xml"
+    },
+    {
+        "merged": "C:\\Workspace\\Android\\TaskList\\app\\build\\intermediates\\res\\merged\\debug\\layout\\listview_task.xml",
+        "source": "C:\\Workspace\\Android\\TaskList\\app\\src\\main\\res\\layout\\listview_task.xml"
+    }
+]

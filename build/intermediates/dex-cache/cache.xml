@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Workspace\Android\TaskList\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.1"
+        sha1="01ecc7f6949398666e02b7031fdc37293320be39">
+        <dex dex="C:\Workspace\Android\TaskList\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_0b406bf611d0d9edc6dd88271743843d72c98153\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Workspace\Android\TaskList\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.1"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="C:\Workspace\Android\TaskList\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.0.1_6d6f9a623d0b2f5e04e816acea2fc4688e92da94\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\ricard.arman.kuodis\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.1"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="C:\Workspace\Android\TaskList\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-23.0.1_dd57b224f375ee76cf93cb76f504b6fc782b1a52\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Workspace\Android\TaskList\app\libs\TabManager.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.1"
+        sha1="25b6223c3d4b5b4df1b9f0a35427cc82b0cc890a">
+        <dex dex="C:\Workspace\Android\TaskList\app\build\intermediates\transforms\dex\debug\folders\1000\2\TabManager_d91f2f094252efa39d4b5c235c55e6185f77397d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Workspace\Android\TaskList\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.1"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="C:\Workspace\Android\TaskList\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-23.0.1_1104cabc3487fb3d7138d768ccd5113fe5a6525a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Workspace\Android\TaskList\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.1"
+        sha1="0d4b84e0d7c83f1c5396b5c5e3216d9e0110ce48">
+        <dex dex="C:\Workspace\Android\TaskList\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_fb4e6d92149b6a8c7de286708f42272c451a7708\classes.dex" />
+    </item>
+
+</items>
