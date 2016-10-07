@@ -1,5 +1,6 @@
 package com.murach.tasklist;
 
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 import android.content.ContentValues;
@@ -9,13 +10,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
+/** Class that encapsulates everything related to databases in our app (DAO) */
 public class TaskListDB {
+    // TEXT(String), INTEGER(int), REAL(double)
 
     // database constants
     public static final String DB_NAME = "tasklist.db";
-    public static final int    DB_VERSION = 1;
+    public static final int    DB_VERSION = 1; // increment if change structure to call onUpgrade() or onDowngrade()
 
     // list table constants
     public static final String LIST_TABLE = "list";
@@ -82,8 +86,13 @@ public class TaskListDB {
             super(context, name, factory, version);
         }
 
+
+        // called if database doesn't exist on the device yer
         @Override
         public void onCreate(SQLiteDatabase db) {
+            // execute simple SQL queries
+            // execSQL is not injection-safe
+
             // create tables
             db.execSQL(CREATE_LIST_TABLE);
             db.execSQL(CREATE_TASK_TABLE);
@@ -99,10 +108,21 @@ public class TaskListDB {
                     "'', '0', '0')");
         }
 
+        // called if android finds a database on a device version that is lower than the one passed into constructor
+        // DBHelper(..., ..., ..., DB_VERSION)
         @Override
         public void onUpgrade(SQLiteDatabase db, 
                 int oldVersion, int newVersion) {
+            // update database structure depending on oldVersion and newVersion
+            if(oldVersion<2){
+                // . . .
+            }
+            if(oldVersion<3){
+                // . . .
+            }
+            // etc.
 
+            // use ALTER to add a new columnd without removing the data
             Log.d("Task list", "Upgrading db from version " 
                     + oldVersion + " to " + newVersion);
             
@@ -121,6 +141,7 @@ public class TaskListDB {
     // constructor
     public TaskListDB(Context context) {
         this.context = context;
+        // pass curent DB version
         dbHelper = new DBHelper(context, DB_NAME, null, DB_VERSION);
     }
     
@@ -143,7 +164,7 @@ public class TaskListDB {
         context.sendBroadcast(intent);
     }
 
-    // public methods
+    // public (client) methods
     public ArrayList<List> getLists() {
         ArrayList<List> lists = new ArrayList<List>();
         openReadableDB();
@@ -160,7 +181,8 @@ public class TaskListDB {
         closeDB();
         return lists;
     }
-    
+
+    /** returns a List object that corresponds with the specified list name */
     public List getList(String name) {
         String where = LIST_NAME + "= ?";
         String[] whereArgs = { name };
@@ -177,20 +199,33 @@ public class TaskListDB {
         
         return list;
     }
-    
+
+    /** Retrieve all tasks from the specified List (model, not collection)*/
     public ArrayList<Task> getTasks(String listName) {
+        // specify which rows to retrieve
+        // list id and not hidden
+        // '?' marks the parameter that will be supplied later
+        /* as a result, the WHERE clause retrieves all rows where the list_id column
+         is equal to the supplied listID value and where hidden columnd is not equal to '1' */
         String where = 
                 TASK_LIST_ID + "= ? AND " + 
                 TASK_HIDDEN + "!='1'";
         long listID = getList(listName).getId();
+        // arguments for the where clause
         String[] whereArgs = { Long.toString(listID) };
 
         this.openReadableDB();
+
         Cursor cursor = db.query(TASK_TABLE, null, 
                 where, whereArgs, 
                 null, null, null);
+        /* As a result, the query method retrieves all columns and
+        doesn’t include GROUP BY, HAVING, or ORDER BY clauses.
+        However, if you want to specify the columns to retrieve, you can code an array */
         ArrayList<Task> tasks = new ArrayList<Task>();
-        while (cursor.moveToNext()) {
+        // must move to first record too
+        // though moveToNext() can replace moveToFirst()
+        while (cursor.moveToNext()) { // while cursor successfully moved to a next record
              tasks.add(getTaskFromCursor(cursor));
         }
         if (cursor != null)
@@ -198,7 +233,8 @@ public class TaskListDB {
         this.closeDB();
         return tasks;
     }
-    
+
+    /** Retrieve task from the DB with specified id */
     public Task getTask(long id) {
         String where = TASK_ID + "= ?";
         String[] whereArgs = { Long.toString(id) };
@@ -214,13 +250,16 @@ public class TaskListDB {
         
         return task;
     }    
-    
+
+    /** Returns a single Task object from the cursor */
     private static Task getTaskFromCursor(Cursor cursor) {
         if (cursor == null || cursor.getCount() == 0){
+            // null or 0 rows
             return null;
         }
         else {
             try {
+                // get values from the cursor at specified column names
                 Task task = new Task(
                     cursor.getInt(TASK_ID_COL), 
                     cursor.getInt(TASK_LIST_ID_COL),
@@ -235,9 +274,12 @@ public class TaskListDB {
             }
         }
     }
-    
+
+    /** Insert Task into the database */
     public long insertTask(Task task) {
+        // object used to store column names and their corresponding values
         ContentValues cv = new ContentValues();
+        // ID columnd is AUTO_INCREMENT => it will be generated
         cv.put(TASK_LIST_ID, task.getListId());
         cv.put(TASK_NAME, task.getName());
         cv.put(TASK_NOTES, task.getNotes());
@@ -251,8 +293,24 @@ public class TaskListDB {
         broadcastTaskModified();
         
         return rowID;
-    }    
-    
+    }
+
+    public int updateTaskPStmt(Task task){
+        // A SQL statement is precompiled and stored in a PreparedStatement object
+        // injection-free
+        // TODO finish me
+        SQLiteStatement stmt = db.compileStatement("UPDATE "+TASK_TABLE
+        + " SET "+TASK_LIST_ID+" = ?, "+TASK_NAME+" = ?,"
+        +TASK_NOTES+" = ?,"+TASK_COMPLETED+" = ?, "+TASK_HIDDEN+" =? WHERE "+TASK_ID+" = ?");
+        stmt.bindLong(0,task.getListId());
+        stmt.bindString(1,task.getName()+"");
+        stmt.bindString(2,task.getNotes()+"");
+        stmt.bindString(3,task.getCompletedDate()+"");
+        stmt.bindString(4,task.getHidden()+"");
+        stmt.execute();
+        return -1;
+    }
+
     public int updateTask(Task task) {
         ContentValues cv = new ContentValues();
         cv.put(TASK_LIST_ID, task.getListId());
@@ -265,6 +323,8 @@ public class TaskListDB {
         String[] whereArgs = { String.valueOf(task.getId()) };
 
         this.openWriteableDB();
+        // update the record that corresponds to our WHERE clause
+        // returns the count of affected rows
         int rowCount = db.update(TASK_TABLE, cv, where, whereArgs);
         this.closeDB();
         
@@ -272,13 +332,22 @@ public class TaskListDB {
         
         return rowCount;
     }    
-    
+
+    /** Delete the Task with the specified id from the database */
     public int deleteTask(long id) {
         String where = TASK_ID + "= ?";
         String[] whereArgs = { String.valueOf(id) };
 
+        // you can also use transaction
+        db.beginTransaction();
+
         this.openWriteableDB();
+        // delete the Entry that corresponds to the passed WHERE clause
+        // returns the count of affected rows
         int rowCount = db.delete(TASK_TABLE, where, whereArgs);
+        db.setTransactionSuccessful();
+        // all changes will be reverted unles marked "clean" by setTranscationSuccessful()
+        db.endTransaction();
         this.closeDB();
         
         broadcastTaskModified();
