@@ -73,7 +73,8 @@ public class TaskListDB {
 
     public static final String DROP_TASK_TABLE = 
             "DROP TABLE IF EXISTS " + TASK_TABLE;
-    
+
+    // broadcast action
     public static final String TASK_MODIFIED =  
             "com.murach.tasklist.TASK_MODIFIED";
 
@@ -145,11 +146,12 @@ public class TaskListDB {
         dbHelper = new DBHelper(context, DB_NAME, null, DB_VERSION);
     }
     
-    // private methods
+    /** Make db variable a read-only database */
     private void openReadableDB() {
         db = dbHelper.getReadableDatabase();
     }
-    
+
+    /** Make db variable a read-write database */
     private void openWriteableDB() {
         db = dbHelper.getWritableDatabase();
     }
@@ -158,7 +160,9 @@ public class TaskListDB {
         if (db != null)
             db.close();
     }
-    
+
+    /**sends the broadcast that data has been modified
+     * is called by methods that update/delete/insert data*/
     private void broadcastTaskModified() {
         Intent intent = new Intent(TASK_MODIFIED);
         context.sendBroadcast(intent);
@@ -191,9 +195,12 @@ public class TaskListDB {
         Cursor cursor = db.query(LIST_TABLE, null, 
                 where, whereArgs, null, null, null);
         List list = null;
+        // cursor must be moved to the first entry
         cursor.moveToFirst();
+        // retreive data from the cursor
         list = new List(cursor.getInt(LIST_ID_COL),
                         cursor.getString(LIST_NAME_COL));
+        // don't forget to close cursor and connection
         cursor.close();
         this.closeDB();
         
@@ -216,18 +223,23 @@ public class TaskListDB {
 
         this.openReadableDB();
 
-        Cursor cursor = db.query(TASK_TABLE, null, 
-                where, whereArgs, 
-                null, null, null);
-        /* As a result, the query method retrieves all columns and
-        doesn’t include GROUP BY, HAVING, or ORDER BY clauses.
-        However, if you want to specify the columns to retrieve, you can code an array */
+        Cursor cursor = db.query(
+                TASK_TABLE, // table name
+                null,       // list of columns to return. null for all columns
+                where,      // WHERE clause ("WHERE"+where)
+                whereArgs,  // arguments, that replace "?" in WHERE clause
+                null,       // GROUP BY clause (null==no grouping)
+                null,       // HAVING clause
+                null);      // ORDER BY clause (null==no ordering)
+        /* This query returns all columns from table "task", where list id is listID and hidden is not 1
+         * Result won't be ordered or grouped. */
         ArrayList<Task> tasks = new ArrayList<Task>();
-        // must move to first record too
-        // though moveToNext() can replace moveToFirst()
+        // Cursor must be moved to first recored before using:
+        // .moveToNext() or moveToFirst()
         while (cursor.moveToNext()) { // while cursor successfully moved to a next record
              tasks.add(getTaskFromCursor(cursor));
         }
+        // close cursor and db
         if (cursor != null)
             cursor.close();
         this.closeDB();
@@ -298,21 +310,36 @@ public class TaskListDB {
     public int updateTaskPStmt(Task task){
         // A SQL statement is precompiled and stored in a PreparedStatement object
         // injection-free
-        // TODO finish me
-        SQLiteStatement stmt = db.compileStatement("UPDATE "+TASK_TABLE
-        + " SET "+TASK_LIST_ID+" = ?, "+TASK_NAME+" = ?,"
-        +TASK_NOTES+" = ?,"+TASK_COMPLETED+" = ?, "+TASK_HIDDEN+" =? WHERE "+TASK_ID+" = ?");
-        stmt.bindLong(0,task.getListId());
-        stmt.bindString(1,task.getName()+"");
-        stmt.bindString(2,task.getNotes()+"");
-        stmt.bindString(3,task.getCompletedDate()+"");
-        stmt.bindString(4,task.getHidden()+"");
-        stmt.execute();
-        return -1;
+        // Prepare String statement
+        String statement = "UPDATE "+TASK_TABLE
+                +" SET "
+                +TASK_LIST_ID+" = ?, "
+                +TASK_NAME+" = ?, "
+                +TASK_NOTES+" = ?,"
+                +TASK_COMPLETED+" = ?, "
+                +TASK_HIDDEN+" =? " +
+                "WHERE "+TASK_ID+" = ?;";
+        /* UPDATE task SET list_id=?(1), task_name=?(2), notes=?(3), date_completed=?(4), hidden=?(5), WHERE _id=?(6) */
+        openWriteableDB(); // don't forget
+        // compile prepared string statement in our DB
+        SQLiteStatement stmt = db.compileStatement(statement);
+        stmt.bindLong(1,task.getListId());
+        stmt.bindString(2,task.getName());
+        stmt.bindString(3,task.getNotes());
+        stmt.bindString(4,task.getCompletedDate());
+        stmt.bindString(5,task.getHidden());
+        stmt.bindLong(6,task.getId());
+//        stmt.execute();   // update task wont work with execute()
+        // because UPDATE, DELETE returns affected row number:
+        int affectedRows=stmt.executeUpdateDelete();
+        closeDB(); // that too ;)
+        return affectedRows;
     }
 
+    /** update table records using CotnentValues approach */
     public int updateTask(Task task) {
         ContentValues cv = new ContentValues();
+        // put data into ContentValues object (like a map)
         cv.put(TASK_LIST_ID, task.getListId());
         cv.put(TASK_NAME, task.getName());
         cv.put(TASK_NOTES, task.getNotes());
@@ -346,7 +373,7 @@ public class TaskListDB {
         // returns the count of affected rows
         int rowCount = db.delete(TASK_TABLE, where, whereArgs);
         db.setTransactionSuccessful();
-        // all changes will be reverted unles marked "clean" by setTranscationSuccessful()
+        // all changes will be reverted unless marked "clean" by setTranscationSuccessful()
         db.endTransaction();
         this.closeDB();
         
@@ -354,9 +381,12 @@ public class TaskListDB {
         
         return rowCount;
     }
-    
+
+    // used by widget
+    /** Get top {@code taskCount} tasks*/
     public String[] getTopTaskNames(int taskCount) {
         String where = TASK_COMPLETED + "= '0'";
+        // TOP
         String orderBy = TASK_COMPLETED + " DESC";
         this.openReadableDB();
         Cursor cursor = db.query(TASK_TABLE, null, 
@@ -376,11 +406,14 @@ public class TaskListDB {
                 
         return taskNames;
     }
-    
+
+    //+==========================================================================================+//
     /*
      * Methods for content provider
      * NOTE: You don't close the DB connection after executing
      * a query, insert, update, or delete operation
+     * because they are closed automatically when the process, that hosts
+     * the content providers is destroyed
      */
     public Cursor genericQuery(String[] projection, String where,
             String[] whereArgs, String orderBy) {
@@ -388,6 +421,7 @@ public class TaskListDB {
         return db.query(TASK_TABLE, projection, where, whereArgs, null, null, orderBy);
     }
 
+    // just insert the ContentValues into the table
     public long genericInsert(ContentValues values) {
         this.openWriteableDB();
         return db.insert(TASK_TABLE, null, values);

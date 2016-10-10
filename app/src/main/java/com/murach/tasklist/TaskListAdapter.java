@@ -37,10 +37,10 @@ public class TaskListAdapter extends BaseAdapter {
         TaskLayout taskLayout = null;
         Task task = tasks.get(position);
         
-        if (convertView == null) {
+        if (convertView == null) { // create new
             taskLayout = new TaskLayout(context, task);
         }
-        else {
+        else { // reuse
             taskLayout = (TaskLayout) convertView;
             taskLayout.setTask(task);
         }

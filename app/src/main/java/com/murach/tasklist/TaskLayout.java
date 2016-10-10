@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+/** A class that extends the layout for a listview item */
 public class TaskLayout extends RelativeLayout implements OnClickListener {
 
     private CheckBox completedCheckBox;
@@ -48,6 +49,7 @@ public class TaskLayout extends RelativeLayout implements OnClickListener {
         setTask(t);
     }
 
+    /** Bind task data to widgets */
     public void setTask(Task t) {
         task = t;
         nameTextView.setText(task.getName());
@@ -78,10 +80,13 @@ public class TaskLayout extends RelativeLayout implements OnClickListener {
                 else {
                     task.setCompletedDate(0);
                 }
+                // update task with new information
                 db.updateTask(task);
                 break;
             default:
+                // clicked anywhere else except checkbox => create Activity to add or Edit this task
                 Intent intent = new Intent(context, AddEditActivity.class);
+                // start a new task
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("taskId", task.getId());
                 intent.putExtra("editMode", true);

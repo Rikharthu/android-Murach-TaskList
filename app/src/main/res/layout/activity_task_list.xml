@@ -3,6 +3,10 @@
     android:id="@android:id/tabhost"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <!--Defines a container for tabs.
+    Has 2 children:
+    1) TabWidget that can contain one or more tabs
+    2) FrameLayout that can display the content for the selected tab -->
 
     <LinearLayout
         android:orientation="vertical"
@@ -16,12 +20,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"/>
 
+        <!--Placeholder required by the TabHost object-->
         <FrameLayout
             android:id="@android:id/tabcontent"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="0"/>
 
+        <!--Real tab content-->
         <FrameLayout
             android:id="@+id/realtabcontent"
             android:layout_width="match_parent"

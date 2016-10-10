@@ -29,6 +29,11 @@ public class TaskListFragment extends Fragment {
 
         // get the current tab
         TabHost tabHost = (TabHost) container.getParent().getParent();
+        //  This Fragment is hosted inside a FrameLayout in activity_task_list.xml
+        //  <TabHost> <- second getPArent() call
+        //      <LinearLayout> <- first getParent() call
+        //          ...
+        //          <FrameLayout>
         currentTabTag = tabHost.getCurrentTabTag();
         
         // refresh the task list view
@@ -42,11 +47,12 @@ public class TaskListFragment extends Fragment {
         // get task list for current tab from database
         Context context = getActivity().getApplicationContext();
         TaskListDB db = new TaskListDB(context);
-        ArrayList<Task> tasks = db.getTasks(currentTabTag);
+        ArrayList<Task> tasks = db.getTasks(currentTabTag); // get tasks for current tag (list name)
 
         // create adapter and set it in the ListView widget
         TaskListAdapter adapter = new TaskListAdapter(context, tasks);
-        taskListView.setAdapter(adapter);        
+        taskListView.setAdapter(adapter);
+        // TODO could remake to notifyDataSetChanged()
     }
     
     @Override

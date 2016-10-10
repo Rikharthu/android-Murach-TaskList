@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class AddEditActivity extends Activity 
 implements OnKeyListener {
@@ -89,6 +90,7 @@ implements OnKeyListener {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menuSave:
+                // save changes. Captain Evidence.
                 saveToDB();
                 this.finish();
                 break;
@@ -122,7 +124,8 @@ implements OnKeyListener {
         
         // update or insert task
         if (editMode) {
-            db.updateTask(task);
+//           db.updateTaskPStmt(task);
+           db.updateTask(task);
         }
         else {
             db.insertTask(task);

@@ -4,3 +4,10 @@
     android:minWidth="250dp"
     android:updatePeriodMillis="21600000" > <!-- every 6 hours -->
 </appwidget-provider>
+<!--
+initialLayout - layout file for the app widget
+minHeight and minWidth - minimal height and width
+updatePeriodMillis - number of millisecodns for an update interval
+(wakes up the device and not guaranteed to be in time)
+calls onUpdate() ???
+-->

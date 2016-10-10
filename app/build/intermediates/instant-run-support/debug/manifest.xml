@@ -24,11 +24,22 @@
         <activity android:name="com.murach.tasklist.AddEditActivity" >
         </activity>
 
+        <!--
+        Content providers must be registered in manifest,
+        for other apps to be aware of your provider
+        -->
         <provider
             android:name="com.murach.tasklist.TaskListProvider"
             android:authorities="com.murach.tasklist.provider"
             android:exported="true" >
         </provider>
+        <!--
+        exported - whether this provider can be used by other apps
+        authorities - authorites for the provider
+        name - provider class name
+        authorities attribute will be mapped to name attribute
+        e.g. incoming requests to authority will be delivered to Provider class
+        -->
 
         <receiver
             android:name="com.murach.tasklist.AppWidgetTop3"

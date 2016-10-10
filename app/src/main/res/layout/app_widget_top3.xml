@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Layout for the Widget
+app widget can only use widgets that are supported by
+the RemoteViews class -->
+<!--It is good practice to add 8dp padding
+however, after api=14, this padding is added automatically -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/appwidget_top3"
     android:layout_width="match_parent"
