@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 
 /**Providers class for an app Widget*/
+// must extend WidgetProbider (here we use support version)
 public class AppWidgetTop3 extends AppWidgetProvider {
 
     public static final String TAG=AppWidgetTop3.class.getSimpleName();

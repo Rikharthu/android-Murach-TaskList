@@ -40,19 +40,21 @@
         e.g. incoming requests to authority will be delivered to Provider class
         -->
 
+
+        <!-- Register Widget as receiver -->
         <receiver
             android:name="com.murach.tasklist.AppWidgetTop3"
-            android:label="@string/appwidget_top3_label" >
+            android:label="@string/appwidget_top3_label" > <!-- name of app widget -->
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <intent-filter>
                 <action android:name="com.murach.tasklist.TASK_MODIFIED" />
             </intent-filter>
-
+            <!-- use the meta-data element to specify the type of broadcast receiver and its location -->
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/app_widget_top3_info" />
+                android:resource="@xml/app_widget_top3_info" /> <!-- Link to configuration file -->
         </receiver>
     </application>
 

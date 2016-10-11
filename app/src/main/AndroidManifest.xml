@@ -38,6 +38,7 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
+            <!--Register Widget as receiver for database updates-->
             <intent-filter>
                 <action android:name="com.murach.tasklist.TASK_MODIFIED" />
             </intent-filter>
